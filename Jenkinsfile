@@ -22,6 +22,17 @@ pipeline {
             }
         }
 
-    }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=springboot-gitops-cicd \
+                        -Dsonar.host.url=http://localhost:9000
+                    '''
+                }
+            }
+        }
 
+    }
 }
